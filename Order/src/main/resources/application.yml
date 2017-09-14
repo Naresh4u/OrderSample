@@ -3,12 +3,19 @@ spring:
  jpa:
     hibernate:
       naming-strategy: org.hibernate.cfg.DefaultNamingStrategy 
+eureka.client.healthcheck.enabled: true
 spring.data.jpa.repositories.enabled: true
-spring.jpa.hibernate.ddl-auto: update
 
 security:
   basic:
     enabled: false
+
+javers:
+  mappingStyle: FIELD
+  algorithm: LEVENSHTEIN_DISTANCE
+  prettyPrint: true
+  typeSafeValues: false
+  newObjectSnapshot: true
 
 spring.jpa:
     show-sql: true
@@ -21,9 +28,9 @@ spring:
  profiles: development
 orderService.datasource:
   driverClassName: com.mysql.jdbc.Driver
-  url: jdbc:mysql://localhost:3306/test
-  username: ${IVP_ORCH_DB_USERID:root}
-  password: ${IVP_ORCH_DB_PASSWD:tiger}
+  url: jdbc:mysql://localhost:3306/ivapp_sample
+  username: root
+  password: root
   accessToUnderlyingConnectionAllowed: true
   max-active: 25
   max-idle: 10
@@ -31,6 +38,5 @@ orderService.datasource:
   initial-size: 1
   validation-query: "SELECT 1"
   test-on-borrow: true
----
 server:
   port: 15008

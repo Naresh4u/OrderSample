@@ -1,78 +1,85 @@
 package com.vz.order.model;
 
+import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+
 /**
  * The persistent class for the order database table.
  * 
  */
 @Entity
 @Table(name="orders")
-public class Orders {
-	@SuppressWarnings("unused")
+public class Orders implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="order_id")
-	private Long orderId;
+	private Integer orderId;
 	
-	@Column(name="address_one")
-	private String addressOne;
-
-	@Column(name="address_two")
-	private String addressTwo;
+	@Column(name="address1")
+	private String address1;
+	
+	@Column(name="address2")
+	private String address2;
 
 	@Column(name="created_date")
 	private Date createdDate;
 
 	@Column(name="modified_date")
 	private Date modifiedDate;
-
+	
 	@Column(name="order_status")
 	private String orderStatus;
-
+	
 	@Column(name="order_type")
 	private String orderType;
-
+	
 	@Column(name="order_version")
-	private String orderVersion;
-
+	private int orderVersion;
+	
 	@Column(name="pro_version")
-	private String proVersion;
-
+	private int proVersion;
+	
+	@Column(name="region")
 	private String region;
-
+	
 	@Column(name="req_source")
 	private String reqSource;
 
 	public Orders() {
 	}
 
-	public Long getOrderId() {
+	public Integer getOrderId() {
 		return this.orderId;
 	}
 
-	public void setOrderId(Long orderId) {
+	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
 	}
 
-	public String getAddressOne() {
-		return this.addressOne;
+	public String getAddress1() {
+		return this.address1;
 	}
 
-	public void setAddressOne(String addressOne) {
-		this.addressOne = addressOne;
+	public void setAddress1(String address1) {
+		this.address1 = address1;
 	}
 
-	public String getAddressTwo() {
-		return this.addressTwo;
+	public String getAddress2() {
+		return this.address2;
 	}
 
-	public void setAddressTwo(String addressTwo) {
-		this.addressTwo = addressTwo;
+	public void setAddress2(String address2) {
+		this.address2 = address2;
 	}
 
 	public Date getCreatedDate() {
@@ -107,19 +114,19 @@ public class Orders {
 		this.orderType = orderType;
 	}
 
-	public String getOrderVersion() {
+	public int getOrderVersion() {
 		return this.orderVersion;
 	}
 
-	public void setOrderVersion(String orderVersion) {
+	public void setOrderVersion(int orderVersion) {
 		this.orderVersion = orderVersion;
 	}
 
-	public String getProVersion() {
+	public int getProVersion() {
 		return this.proVersion;
 	}
 
-	public void setProVersion(String proVersion) {
+	public void setProVersion(int proVersion) {
 		this.proVersion = proVersion;
 	}
 
@@ -138,4 +145,5 @@ public class Orders {
 	public void setReqSource(String reqSource) {
 		this.reqSource = reqSource;
 	}
+
 }

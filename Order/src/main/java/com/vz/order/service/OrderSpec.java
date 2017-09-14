@@ -37,14 +37,14 @@ public class OrderSpec implements Specification<Orders> {
 				criteria.add(cb.equal(root.get("orderStatus"), order.getOrderStatus()));
 			}
 
-			/*if (order.getOrderVersion() != 0) {
+			if (order.getOrderVersion() != 0) {
 				criteria.add(cb.equal(root.get("orderVersion"), order.getOrderVersion()));
 			}
 
 			if (order.getProVersion() != 0) {
 				criteria.add(cb.equal(root.get("proVersion"), order.getProVersion()));
 			}
-*/			
+			
 			if (order.getRegion() != null && !order.getRegion().isEmpty()) {
 				criteria.add(cb.equal(root.get("region"), order.getRegion()));
 			}
@@ -53,12 +53,12 @@ public class OrderSpec implements Specification<Orders> {
 				criteria.add(cb.equal(root.get("reqSource"), order.getReqSource()));
 			}
 			
-			if (order.getAddressOne() != null && !order.getAddressOne().isEmpty()) {
-				criteria.add(cb.equal(root.get("address1"), order.getAddressOne()));
+			if (order.getAddress1() != null && !order.getAddress1().isEmpty()) {
+				criteria.add(cb.equal(root.get("address1"), order.getAddress1()));
 			}
 			
-			if (order.getAddressTwo() != null && !order.getAddressTwo().isEmpty()) {
-				criteria.add(cb.equal(root.get("address2"), order.getAddressTwo()));
+			if (order.getAddress2() != null && !order.getAddress2().isEmpty()) {
+				criteria.add(cb.equal(root.get("address2"), order.getAddress2()));
 			}
 			
 		}
