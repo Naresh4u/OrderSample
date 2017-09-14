@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiResponses;
 
 import com.vz.order.constants.StatusCode;
 import com.vz.order.exception.ApplicationException;
-import com.vz.order.model.Order;
+import com.vz.order.model.Orders;
 import com.vz.order.model.OrderResponse;
 import com.vz.order.model.ResponseStatus;
 import com.vz.order.service.OrderService;
@@ -43,45 +43,45 @@ public class OrderController {
     @CrossOrigin(origins = { "*" })
 	@ApiOperation(value = "Get Order", notes = "Returns A Response Of Order Details. SLA:500", response = OrderResponse.class)
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "Successfully Retrieved OrderRequestFallout Details", response = Order.class),
+			@ApiResponse(code = 200, message = "Successfully Retrieved OrderRequestFallout Details", response = Orders.class),
 			@ApiResponse(code = 400, message = "Invalid Input Provided"),
 			@ApiResponse(code = 404, message = "Note Does Not Exist") })
-	public ResponseEntity<OrderResponse> getOrderRequestFallout(@RequestBody Order order) {
-    	OrderResponse response = new OrderResponse();
-    	Boolean returnStatus = false;
-		String statusCode = null;
-		String statusMsg = null;
-		List<Order> orderList = null;
-		
-    	try {
-			orderList = orderService.getOrders(order);
-			if (orderList != null && !orderList.isEmpty()) {
-				statusMsg = StatusCode.SUCCESS.getDesc();
-				statusCode = StatusCode.SUCCESS.getCode();
+    public ResponseEntity<OrderResponse> getOrderRequestFallout(@RequestBody Orders order) {
+	OrderResponse response = new OrderResponse();
+	Boolean returnStatus = false;
+	String statusCode = null;
+	String statusMsg = null;
+	List<Orders> orderList = null;
 
-			} else {
-				statusMsg = StatusCode.DATA_NOT_FOUND.getDesc();
-				statusCode = StatusCode.DATA_NOT_FOUND.getCode();
-			}
-			
-		} catch (ApplicationException e) {
-			statusMsg = e.getMessage();
-			statusCode = e.getErrCode();
-			e.printStackTrace();
-		}
-    	ResponseStatus responseStatus = new ResponseStatus();
-		responseStatus.setCode(statusCode);
-		responseStatus.setDescription(statusMsg);
-		
-		response.setStatus(responseStatus);
-		response.setOrderList(orderList);
+	try {
+	    orderList = orderService.getOrders(order);
+	    if (orderList != null && !orderList.isEmpty()) {
+		statusMsg = StatusCode.SUCCESS.getDesc();
+		statusCode = StatusCode.SUCCESS.getCode();
 
-		if (returnStatus) {
-			LOGGER.debug(" OrderRequestFallout retrieved successfully");
-			return ResponseEntity.ok(response);
-		} else {
-			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(response);
-		}
+	    } else {
+		statusMsg = StatusCode.DATA_NOT_FOUND.getDesc();
+		statusCode = StatusCode.DATA_NOT_FOUND.getCode();
+	    }
+
+	} catch (ApplicationException e) {
+	    statusMsg = e.getMessage();
+	    statusCode = e.getErrCode();
+	    e.printStackTrace();
+	}
+	ResponseStatus responseStatus = new ResponseStatus();
+	responseStatus.setCode(statusCode);
+	responseStatus.setDescription(statusMsg);
+
+	response.setStatus(responseStatus);
+	response.setOrderList(orderList);
+
+	if (returnStatus) {
+	    LOGGER.debug(" OrderRequestFallout retrieved successfully");
+	    return ResponseEntity.ok(response);
+	} else {
+	    return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(response);
+	}
     }
     
     
@@ -90,6 +90,7 @@ public class OrderController {
      * 
      * @param orderRequest
      * @return
+     * @throws Exception 
      */
     @RequestMapping(value = "/createOrder", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     @CrossOrigin(origins = { "*" })
@@ -98,36 +99,36 @@ public class OrderController {
 	    @ApiResponse(code = 200, message = "Successful Creation Of Order", response = OrderResponse.class),
 	    @ApiResponse(code = 404, message = "Creation Of Order Failed"),
 	    @ApiResponse(code = 400, message = "Invalid Input Provided") })
-    public ResponseEntity<OrderResponse> createOrderRequestFallout(@RequestBody Order orderRequest) {
-    	
-    	OrderResponse response = new OrderResponse();
-    	Order order = new Order();
-    	Boolean returnCreateStatus = false;
-		String createStatusCode = null;
-		String createstatusMsg = null;
-		boolean isValid = false;
-    	
-    	order = orderService.createOrder(orderRequest);
-		returnCreateStatus = true;
-		if (order != null) {
-			createStatusCode = StatusCode.SUCCESS.getCode();
-			createstatusMsg = StatusCode.SUCCESS.getDesc();
+    public ResponseEntity<OrderResponse> createOrderRequestFallout(@RequestBody Orders orderRequest) throws Exception {
 
-		} else {
-			createStatusCode = StatusCode.DATA_NOT_FOUND.getCode();
-			createstatusMsg = StatusCode.DATA_NOT_FOUND.getDesc();
-		}
-    	ResponseStatus responseStatus = new ResponseStatus();
-		responseStatus.setCode(createStatusCode);
-		responseStatus.setDescription(createstatusMsg);
-		response.setStatus(responseStatus);
-		
-    	if (returnCreateStatus) {
-    		response.setOrder(order);
-    		LOGGER.debug("Order created successfully");
-			return ResponseEntity.ok(response);
-		} else {
-			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(response);
-		}
+	OrderResponse response = new OrderResponse();
+	Orders order = null;
+	Boolean returnCreateStatus = false;
+	String createStatusCode = null;
+	String createstatusMsg = null;
+	boolean isValid = false;
+
+	order = orderService.doCarParkingCheckIn(orderRequest);
+	returnCreateStatus = true;
+	if (order != null) {
+	    createStatusCode = StatusCode.SUCCESS.getCode();
+	    createstatusMsg = StatusCode.SUCCESS.getDesc();
+
+	} else {
+	    createStatusCode = StatusCode.DATA_NOT_FOUND.getCode();
+	    createstatusMsg = StatusCode.DATA_NOT_FOUND.getDesc();
+	}
+	ResponseStatus responseStatus = new ResponseStatus();
+	responseStatus.setCode(createStatusCode);
+	responseStatus.setDescription(createstatusMsg);
+	response.setStatus(responseStatus);
+
+	if (returnCreateStatus) {
+	    response.setOrder(order);
+	    LOGGER.debug("Order created successfully");
+	    return ResponseEntity.ok(response);
+	} else {
+	    return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(response);
+	}
     }
 }

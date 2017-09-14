@@ -1,78 +1,78 @@
 package com.vz.order.model;
 
-import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-
-
 /**
  * The persistent class for the order database table.
  * 
  */
 @Entity
-@Table(name="order")
-//@NamedQuery(name="Order.findAll", query="SELECT o FROM Order o")
-public class Order implements Serializable {
+@Table(name="orders")
+public class Orders {
+	@SuppressWarnings("unused")
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer orderId;
-	@Column(name="address1")
-	private String address1;
-	@Column(name="address2")
-	private String address2;
+	@Column(name="order_id")
+	private Long orderId;
+	
+	@Column(name="address_one")
+	private String addressOne;
 
-	@Column(name="createdDate")
+	@Column(name="address_two")
+	private String addressTwo;
+
+	@Column(name="created_date")
 	private Date createdDate;
 
-	@Column(name="modifiedDate")
+	@Column(name="modified_date")
 	private Date modifiedDate;
-	@Column(name="orderStatus")
+
+	@Column(name="order_status")
 	private String orderStatus;
-	@Column(name="orderType")
+
+	@Column(name="order_type")
 	private String orderType;
-	@Column(name="orderVersion")
-	private int orderVersion;
-	@Column(name="proVersion")
-	private int proVersion;
-	@Column(name="region")
+
+	@Column(name="order_version")
+	private String orderVersion;
+
+	@Column(name="pro_version")
+	private String proVersion;
+
 	private String region;
-	@Column(name="reqSource")
+
+	@Column(name="req_source")
 	private String reqSource;
 
-	public Order() {
+	public Orders() {
 	}
 
-	public Integer getOrderId() {
+	public Long getOrderId() {
 		return this.orderId;
 	}
 
-	public void setOrderId(Integer orderId) {
+	public void setOrderId(Long orderId) {
 		this.orderId = orderId;
 	}
 
-	public String getAddress1() {
-		return this.address1;
+	public String getAddressOne() {
+		return this.addressOne;
 	}
 
-	public void setAddress1(String address1) {
-		this.address1 = address1;
+	public void setAddressOne(String addressOne) {
+		this.addressOne = addressOne;
 	}
 
-	public String getAddress2() {
-		return this.address2;
+	public String getAddressTwo() {
+		return this.addressTwo;
 	}
 
-	public void setAddress2(String address2) {
-		this.address2 = address2;
+	public void setAddressTwo(String addressTwo) {
+		this.addressTwo = addressTwo;
 	}
 
 	public Date getCreatedDate() {
@@ -107,19 +107,19 @@ public class Order implements Serializable {
 		this.orderType = orderType;
 	}
 
-	public int getOrderVersion() {
+	public String getOrderVersion() {
 		return this.orderVersion;
 	}
 
-	public void setOrderVersion(int orderVersion) {
+	public void setOrderVersion(String orderVersion) {
 		this.orderVersion = orderVersion;
 	}
 
-	public int getProVersion() {
+	public String getProVersion() {
 		return this.proVersion;
 	}
 
-	public void setProVersion(int proVersion) {
+	public void setProVersion(String proVersion) {
 		this.proVersion = proVersion;
 	}
 
@@ -138,5 +138,4 @@ public class Order implements Serializable {
 	public void setReqSource(String reqSource) {
 		this.reqSource = reqSource;
 	}
-
 }
